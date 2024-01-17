@@ -1,35 +1,51 @@
 # AKS Cluster
 ### Table of Contents:
     1. A description of the project
-    2. Installation instructions
-    3. Usage instructions
-    4. File structure of the project
-    5. License information 
+    2. Usage instructions
+    3. File structure of the project
+    4. License information 
 
 1. A description of the project: 
     - What it does:
-        - 
-        - 
-        - 
-        - 
+        - This project creates an AKS cluster using Terraform.
     - The aim of the project:
-        - 
+        - To understand the necessary steps to take to create an AKS cluster using Terraform.
     - What you learned:
-        - 
-
-1. Installation instructions
-    - 
+        - How to provision resources for Terraform
+        - How to construct and utilise modules in Terraform
+        - How to use variables
+        - How to add sensitive variables into Terraform scripts without revealing the data
+        - How to access AKS cluster services using `kubectl` commands on the AzureCLI
+        - How to access the kubeconfig data from an AKS cluster once its been applied using `terraform apply`
 
 1. Usage instructions
-    - 
-    - 
-    - 
-    - 
-    - 
+    - Once the repository has been cloned onto the local machine, the user will need to create a `secrets.tfvars` file. In this file will need to be stored these values:
+        - client_id        = "your_azure_client_id"
+        - client_secret    = "your_azure_client_secret"
+        - subscription_id  = "your_azure_subscription_id"
+        - tenant_id        = "your_azure_tenant_id"
+        - public_ip        = "your_public_ip_address" <br>
+    Replace the values in the quotation marks with the actual credentials as these will be needed later.
+    - Now initialise terraform in each directory and subdirectory:
+        - Change directory into the `networking-module` and run `terraform init` from the command line.
+        - Change directory back to `AKS-TERRAFORM` directory and then into `aks-cluster-module` and run `terraform init` 
+        - change back into `AKS-TERRAFORM` and run `terraform init`
+    - Once everything is initialised, from the `AKS-TERRAFORM` directory, run `terraform apply -var-file="secrets.tfvars"` to apply the terraform configuration with the sensitive data variables.
+
 1. File structure of the project
     ### aks-terraform
-    - main.tf
-        - blah blah blah
+    - main.tf - this is the main.tf file where the modules will be utilised to create an aks cluster using terraform.
+        - define the terraform block and the required providers,
+        - define the provider block, its features and variables.
+        - define the module block for the networking module, its source directory and its variables.
+        - define the module block for the aks_cluster module, its source directory and input variables from necessary sources.
+    - variables.tf - This is where the boiler plate code for the variables marked as sensitive data will be channeled through. For this project The sensitive data variables are:
+        - client_id
+        - client_secret
+        - subscription_id
+        - tenant_id
+        - public_ip
+
     - aks-cluster-module
         #### Defining the resources for the cluster module
         - main.tf:
