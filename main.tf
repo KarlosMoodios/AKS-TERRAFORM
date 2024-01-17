@@ -24,17 +24,13 @@ module "aks_cluster" {
   source = "./aks-cluster-module"
 
   # Input variables for the AKS cluster module
-  aks_cluster_name                = module.aks_cluster.aks_cluster_name
-  cluster_location                = module.aks_cluster.cluster_location
   service_principal_client_id     = var.client_id
   service_principal_client_secret = var.client_secret
 
   # Input variables referencing outputs from the networking module
-  networking_resource_group_name  = module.networking.networking_resource_group_name.name
+  networking_resource_group_name  = module.networking.networking_resource_group_name
   vnet_id                         = module.networking.vnet_id
   control_plane_subnet_id         = module.networking.control_plane_subnet_id
   worker_node_subnet_id           = module.networking.worker_node_subnet_id
   aks_nsg_id                      = module.networking.aks_nsg_id
-
-  # Define more input variables as needed...
 }
